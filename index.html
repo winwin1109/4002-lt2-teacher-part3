@@ -386,9 +386,6 @@
 <body>
 
     <div class="top-nav">
-        <button class="nav-btn" onclick="window.parent.showView('lessons-view-writing')" style="background: #b2bec3; color: white; border-color: #b2bec3; margin-right: 15px;">
-            <i class="fa-solid fa-arrow-left"></i> 返回課程列表
-        </button>
         <button class="nav-btn active" onclick="switchPage(4)">3寫作策略-結構</button>
         <button class="nav-btn" onclick="switchPage(5)">3寫作策略-格式</button>
         <button class="nav-btn" onclick="switchPage(6)">3寫作策略-重點</button>
@@ -1566,12 +1563,8 @@
                 "table { border-collapse: collapse; width: 100%; margin-bottom: 20px; border: 2px solid #d8e2dc; }" +
                 "th { padding: 12px; font-size: 14pt; font-weight: bold; border: 1px solid #e2e8f0; }" +
                 "td { padding: 12px; vertical-align: top; border: 1px solid #e2e8f0; }" +
-                ".strategy-card, .info-box, .tone-card, .value-card, .article-box, .category-box, .q-box, .title-formula-card { border: 2px solid #e2e8f0; padding: 15px; margin-bottom: 15px; }" +
-                ".vc-header, .tone-card-header { padding: 10px; font-weight: bold; font-size: 14pt; margin-bottom: 10px; }" +
+                ".title-formula-card { border: 2px solid #e2e8f0; padding: 15px; margin-bottom: 15px; }" +
                 ".sub-heading-blue span { background-color: #a3c4f3; color: #ffffff; padding: 5px 10px; font-weight: bold; }" +
-                ".pyr-layer, .six-w-row { padding: 10px; border: 1px solid #e2e8f0; margin-bottom: 5px; text-align: center; font-weight: bold; }" +
-                ".w1h-grid span { display: block; margin-bottom: 5px; }" +
-                ".explanation-box { color: #0984e3; background-color: #e0f2fe; padding: 10px; border-left: 5px solid #0984e3; margin-top: 10px; font-weight: bold; font-size: 11pt; }" +
                 "ul { margin-left: 20px; }" +
                 "li { margin-bottom: 8px; }" +
                 ".newspaper-layout { background-color: #fcfaf2; border: 1px solid #dcdde1; padding: 30px; font-family: 'PMingLiU', serif; color: #2f3640; margin-bottom: 30px; }" +
@@ -1606,61 +1599,9 @@
                 input.parentNode.replaceChild(span, input);
             });
 
-            // 處理遊戲選項空格
-            cloneNode.querySelectorAll('.empty-slot').forEach(function(slot) {
-                var span = document.createElement('span');
-                var text = slot.innerText.replace('✔', '').replace('✘', '').trim();
-                if(text === "點擊填寫") {
-                    span.innerText = "_______________________";
-                    span.style.color = "#a0aec0";
-                } else {
-                    span.innerText = text;
-                    span.style.color = "#00b894"; 
-                    span.style.fontWeight = "bold";
-                }
-                slot.parentNode.replaceChild(span, slot);
-            });
-
-            // 處理 T/F 按鈕匯出
-            cloneNode.querySelectorAll('.tf-btn-group').forEach(function(group) {
-                var correctBtn = group.querySelector('.tf-btn.correct');
-                var span = document.createElement('span');
-                span.style.fontWeight = "bold";
-                if(correctBtn) {
-                    span.innerText = "[ " + correctBtn.innerText.replace('✔', '').trim() + " ]";
-                    span.style.color = "#00b894";
-                } else {
-                    span.innerText = "[ 未作答 ]";
-                    span.style.color = "#a0aec0";
-                }
-                group.parentNode.replaceChild(span, group);
-            });
-
-            // 處理小填空匯出
-            cloneNode.querySelectorAll('.small-slot').forEach(function(slot) {
-                var span = document.createElement('span');
-                span.style.fontWeight = "bold";
-                var text = slot.innerText.trim();
-                if(text === "____") {
-                    span.innerText = "_________";
-                    span.style.color = "#a0aec0";
-                } else {
-                    span.innerText = " " + text + " ";
-                    span.style.color = "#00b894";
-                    span.style.textDecoration = "underline";
-                }
-                slot.parentNode.replaceChild(span, slot);
-            });
-
             // 匯出 Word 時將題庫、選項按鈕與清除按鈕移除
             cloneNode.querySelectorAll('.options-bank, .reset-btn, .hint-dot, .guide-dot, .q-options-container, .error-modal-overlay, .guide-modal').forEach(el => el.remove());
-            // 移除提示文字
-            cloneNode.querySelectorAll('div').forEach(el => {
-                if(el.innerText === '第一格選項：' || el.innerText === '第二格選項：') {
-                    el.remove();
-                }
-            });
-
+            
             var sourceHTML = cloneNode.outerHTML;
 
             const colorMap = {
